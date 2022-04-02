@@ -1,0 +1,35 @@
+# Deployment convert-temp
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: convert-temp
+spec:
+  selector:
+    matchLabels:
+      app: convert-temp
+  template:
+    metadata:
+      labels:
+        app: convert-temp
+    spec:
+      containers:
+        - name: convert-temp
+          image: pedronl/convert-temp:v1
+          ports:
+            - containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: convert-temp
+spec:
+  selector:
+    app: convert-temp
+  ports:
+    - protocol: TCP
+      port: 8080
+      nodePort: 30000
+  type: NodePort
+
